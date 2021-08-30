@@ -1,0 +1,183 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>POC: PHP API No Frameworks</title>
+  <meta name="description" content="A proof of concept for a small PHP API not using frameworks.">
+  <meta name="author" content="Jake Salazar">
+
+  <meta property="og:title" content="POC: PHP API No Frameworks">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://jakesalazar.com">
+  <meta property="og:description" content="POC: PHP API No Frameworks">
+  <meta property="og:image" content="image.png">
+
+  <!-- 
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"> 
+  -->
+
+  <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
+
+</head>
+
+<body>
+    <h1>API PoC</h1>
+    
+    <a href="#" id="create">Create</a><br><br>
+    <a href="#" id="read">Read</a><br><br>
+    <a href="#" id="update">Update</a><br><br>
+    <a href="#" id="delete">Delete</a><br><br>
+    
+    <div id="response"></div>
+
+
+    <script>
+
+    // EASY YOUR LIFE
+    // Spoof fake form submissions with randomized data
+    const rRecords = [57,58,59,60,61,62,64,65,67,68,72,73,74,75,76,77,78,79,80,81,82,83];
+    const rFName = ['Juana', 'Maria', 'Juan', 'Miguel', 'Chancho', 'Pedro', 'Domingo', 'Jesus', 'Chuy'];
+    const rLName = ['Gonzales', 'Winthorp', 'Ruiz', 'Jackson', 'Potosino', 'Jones', 'Sullivan', 'Martinez', 'Chen'];
+    const rAges = [21, 30, 25, 34, 50, 75, 18, 81, 52, 64];
+    const rTitles = ['Janitor', 'Electrician', 'Hacker', 'Waiter', 'Plumber', 'Influencer', 'Analyst'];
+
+
+    const API = {
+        url: 'http://127.0.0.1:4569/api/',
+        btnCreate: document.getElementById('create'),
+        btnRead: document.getElementById('read'),
+        btnUpdate: document.getElementById('update'),
+        btnDelete: document.getElementById('delete'),
+        apiResponse: document.getElementById('response'),
+
+        generateHandlers() {
+
+            this.btnCreate.addEventListener('click', function (event) {
+                    event.preventDefault()
+                    API.create()
+                })
+            this.btnRead.addEventListener('click', function (event) {
+                    event.preventDefault()
+                    API.read()
+                })
+            this.btnUpdate.addEventListener('click', function (event) {
+                    event.preventDefault()
+                    API.update()
+                })
+            this.btnDelete.addEventListener('click', function (event) {
+                    event.preventDefault()
+                    API.delete()
+                })
+
+        },
+        
+        create() {
+            
+            const params = {
+                name: rFName[Math.floor(Math.random()*rFName.length)] + ' ' + rLName[Math.floor(Math.random()*rLName.length)],
+                email: rFName[Math.floor(Math.random()*rFName.length)] + '@gmail.com',
+                age: rAges[Math.floor(Math.random()*rAges.length)],
+                designation: rTitles[Math.floor(Math.random()*rTitles.length)],
+            }
+        
+            const options = {
+                method: 'POST',
+                // headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify( params )  
+            }
+            
+            console.log('CREATING: ', options.body)
+
+            this.sendFetch(this.url+'create/', options)
+
+        },
+        
+        read() {
+
+            let thisRecord = rRecords[Math.floor(Math.random() * rRecords.length)];
+            console.log('READING: ', thisRecord)
+            
+            const params = {
+                id: thisRecord
+            }
+        
+            const options = {
+                method: 'POST',
+                // headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify( params )  
+            }
+
+            this.sendFetch(this.url+'read/', options)
+
+        },
+        
+        update() {
+
+            let thisRecord = rRecords[Math.floor(Math.random() * rRecords.length)];
+            console.log("UPDATING", thisRecord)
+        
+            const params = {
+                id: thisRecord,
+                name: rFName[Math.floor(Math.random()*rFName.length)] + ' ' + rLName[Math.floor(Math.random()*rLName.length)],
+                email: rFName[Math.floor(Math.random()*rFName.length)] + '@gmail.com',
+                age: rAges[Math.floor(Math.random()*rAges.length)],
+                designation: rTitles[Math.floor(Math.random()*rTitles.length)],
+            }
+        
+            const options = {
+                method: 'POST',
+                // headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify( params )  
+            }
+
+            this.sendFetch(this.url+'update/', options)
+
+        },
+        
+        delete() {
+
+            let thisRecord = rRecords[Math.floor(Math.random() * rRecords.length)];
+            console.log("DELETING", thisRecord)
+        
+            const params = {
+                id: thisRecord
+            }
+        
+            const options = {
+                method: 'POST',
+                // headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify( params )  
+            }
+
+            this.sendFetch(this.url+'delete/', options)
+        },
+        
+        sendFetch(url, options) {
+
+            fetch(url, options)
+                .then( response => response.json() )
+                .then( response => {
+
+                    if (url !== 'http://127.0.0.1:4569/api/read/') {
+                        this.apiResponse.innerHTML = `<div>${response}</div>`;
+                    }
+                    else {
+                        this.apiResponse.innerHTML = `<div>${response.name}</div> <a href="mailto:${response.email}">${response.email}</a><br> ${response.age}`;
+                    }
+
+                })
+
+        }
+
+    };
+
+    API.generateHandlers()
+
+    </script>
+</body>
+</html>

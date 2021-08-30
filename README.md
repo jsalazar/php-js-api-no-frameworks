@@ -11,6 +11,14 @@ This is basic boilerplate for implementing a PHP driven API for your project alo
 - `.htaccess` is setup so all requests to /api/ are handled by root `index.php` 
  
 
+# Caveats
+- this is not for production code
+- the Javascript found in the `index.html` file is not transpiled (with Babel) so some of the syntax is not supported by IE.
+- no security layer was implemented
+- it is implemented to support POST calls only 
+- there are no build steps
+
+
 # Requirements 
 - Vagrant should be installed on your machine to run and work on this project
 - If you don't have it, try it out: https://www.vagrantup.com/downloads

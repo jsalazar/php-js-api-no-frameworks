@@ -1,4 +1,4 @@
-# POC: PHP API, No Frameworks
+# POC: PHP/JS API, No Frameworks
 This is basic boilerplate for implementing a PHP driven API for your project along with some vanilla Javascript.
 
 # Goals
@@ -20,9 +20,9 @@ This is basic boilerplate for implementing a PHP driven API for your project alo
 
 Clone this repo: 
 ```bash
-git clone https://link-to-project
+git clone https://github.com/jsalazar/php-js-api-no-frameworks.git
 
-cd /your/path/php-api-starter
+cd /your/path/php-js-api-no-frameworks
 ```
 
 

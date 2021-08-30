@@ -16,7 +16,7 @@ This is basic boilerplate for implementing a PHP driven API for your project alo
 - the Javascript found in the `index.html` file is not transpiled (with Babel) so some of the syntax is not supported by IE.
 - no security layer was implemented
 - it is implemented to support POST calls only 
-- there are no build steps
+- there are no build steps, just barebones code :)
 
 
 # Requirements 
